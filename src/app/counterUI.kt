@@ -222,8 +222,7 @@ private fun RBuilder.inputBind(inputType: InputType, isDoubleClick: Boolean, des
     div {
         label { +desc }
         val classes = if (isDoubleClick) "counter_name" else ""
-//        input(type = inputType, classes = classes) {
-        textArea( classes = classes) {
+        input(type = inputType, classes = classes) {
             if (isDoubleClick) {
                 val baseHeight = 18.0
                 val w = when {
