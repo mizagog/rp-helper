@@ -252,14 +252,18 @@ private fun RBuilder.inputBind(inputType: InputType, isDoubleClick: Boolean, des
                     }
                     onDoubleClickFunction = dcFun
                     onMouseUpFunction = dcFun
-                    // Fix for Safari mobile keyboard - touch events need to explicitly focus
-                    onTouchEndFunction = { e ->
+                    // Fix for Safari mobile keyboard - need to handle touch separately
+                    onTouchStartFunction = { e ->
                         val asDynamic = e.currentTarget.asDynamic()
+                        // Remove readonly BEFORE focus happens so Safari will show keyboard
                         if (asDynamic.readOnly == true) {
                             asDynamic.readOnly = false
-                            asDynamic.focus()
-                            asDynamic.select()
                         }
+                    }
+                    onTouchEndFunction = { e ->
+                        val asDynamic = e.currentTarget.asDynamic()
+                        asDynamic.focus()
+                        asDynamic.select()
                     }
                     onBlurFunction = {
                         it.currentTarget.asDynamic().readOnly = true
