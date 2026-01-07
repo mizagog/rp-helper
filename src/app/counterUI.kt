@@ -240,42 +240,13 @@ private fun RBuilder.inputBind(inputType: InputType, isDoubleClick: Boolean, des
                 }
             }
             attrs {
-                //                wrap = js { "hard" }
-//                if (isDoubleClick) {
-                    readonly = true
-                    val dcFun: (Event) -> Unit = {
-                        val asDynamic = it.currentTarget.asDynamic()
-//                        if (document.activeElement == it.currentTarget && it.currentTarget.asDynamic().readOnly == true)
-                        if (asDynamic.readOnly == true)
-                            asDynamic.select()
-                        asDynamic.readOnly = false
-                    }
-                    onDoubleClickFunction = dcFun
-                    onMouseUpFunction = dcFun
-                    // Fix for Safari mobile keyboard - need to handle touch separately
-                    onTouchStartFunction = { e ->
-                        val asDynamic = e.currentTarget.asDynamic()
-                        // Remove readonly BEFORE focus happens so Safari will show keyboard
-                        if (asDynamic.readOnly == true) {
-                            asDynamic.readOnly = false
-                        }
-                    }
-                    onTouchEndFunction = { e ->
-                        val asDynamic = e.currentTarget.asDynamic()
-                        asDynamic.focus()
-                        asDynamic.select()
-                    }
-                    onBlurFunction = {
-                        it.currentTarget.asDynamic().readOnly = true
-                        document.asDynamic().getSelection().empty()
-                        window.asDynamic().getSelection().removeAllRanges()
-                        it.currentTarget.asDynamic().blur()
-                    }
-//                } else {
-//                    onFocusFunction = {
-//                        it.currentTarget.asDynamic().select()
-//                    }
-//                }
+                onFocusFunction = {
+                    it.currentTarget.asDynamic().select()
+                }
+                onBlurFunction = {
+                    document.asDynamic().getSelection().empty()
+                    window.asDynamic().getSelection().removeAllRanges()
+                }
                 value = label
                 onKeyDownFunction = {
                     oldVal = it.currentTarget.asDynamic().value as String
