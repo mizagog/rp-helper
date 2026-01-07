@@ -239,6 +239,13 @@ private fun RBuilder.inputBind(inputType: InputType, isDoubleClick: Boolean, des
                 }
             }
             attrs {
+                // Explicit click handler to ensure focus works on iOS Safari
+                onClickFunction = { e ->
+                    e.stopPropagation()
+                    val target = e.currentTarget.asDynamic()
+                    target.focus()
+                    target.select()
+                }
                 onFocusFunction = {
                     it.currentTarget.asDynamic().select()
                 }

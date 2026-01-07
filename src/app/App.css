@@ -47,6 +47,14 @@ body {
   -moz-box-shadow: none;
   box-shadow: none;
   -webkit-appearance: none; /* Remove iOS styling */
+  touch-action: manipulation; /* Enable proper touch handling on iOS */
+}
+
+/* Ensure all inputs work on iOS Safari */
+input, textarea {
+  font-size: 16px;
+  touch-action: manipulation;
+  -webkit-appearance: none;
 }
 
 .caption {
